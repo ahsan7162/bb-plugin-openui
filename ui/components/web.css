@@ -1,0 +1,256 @@
+/* Hallmark · shape: app screen · scope: component kit, web group · genre: modern-minimal · theme: BB (by request: BB's own tokens) · states: 8 · v2.0.0 */
+/* Maps, media and sandbox (web.tsx). Tokens from kit.css only; see DESIGN.md. */
+
+/* Map: the frame keeps the logical 640 by 360 view's aspect, so tiles and pins sit in percent. */
+.bbui-web-map {
+  margin: 0;
+  display: grid;
+  gap: var(--bbui-s3);
+  container-type: inline-size;
+}
+.bbui-web-map-body {
+  display: grid;
+  gap: var(--bbui-s3);
+  align-items: start;
+}
+.bbui-web-map-body > * { min-width: 0; }
+@container (min-width: 600px) {
+  .bbui-web-map-body { grid-template-columns: minmax(0, 1fr) 220px; }
+  .bbui-web-list { max-height: 340px; overflow-y: auto; }
+}
+.bbui-web-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--bbui-r-well);
+  background: var(--bbui-well);
+}
+.bbui-web-frame > .bbui-skeleton { position: absolute; inset: 0; }
+.bbui-web-frame > .bbui-skeleton > span { height: 100% !important; border-radius: 0; }
+.bbui-web-tile {
+  position: absolute;
+  display: block;
+  max-width: none;
+  user-select: none;
+  pointer-events: none;
+}
+.bbui-web-route {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.bbui-web-line {
+  fill: none;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+/* One route per day, in a fixed accent lightness ramp. */
+.bbui-web-series-0 { --bbui-web-series: var(--bbui-accent); }
+.bbui-web-series-1 { --bbui-web-series: color-mix(in oklch, var(--bbui-accent) 78%, var(--bbui-surface)); }
+.bbui-web-series-2 { --bbui-web-series: color-mix(in oklch, var(--bbui-accent) 56%, var(--bbui-surface)); }
+.bbui-web-series-3 { --bbui-web-series: color-mix(in oklch, var(--bbui-accent) 38%, var(--bbui-surface)); }
+.bbui-web-line { stroke: var(--bbui-web-series); }
+.bbui-web-swatch {
+  display: inline-block;
+  width: 12px;
+  height: 2px;
+  background: var(--bbui-web-series);
+}
+
+.bbui-web-pin {
+  appearance: none;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  min-width: 22px;
+  height: 22px;
+  padding: 0 var(--bbui-s1);
+  border: 1px solid var(--bbui-accent);
+  border-radius: var(--bbui-r-control);
+  background: var(--bbui-surface);
+  color: var(--bbui-ink);
+  font: var(--bbui-tiny);
+  font-weight: 560;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition: background-color var(--bbui-micro) var(--bbui-ease-out), color var(--bbui-micro) var(--bbui-ease-out);
+}
+.bbui-web-pin::before { content: ""; position: absolute; inset: -11px; } /* 44px hit area */
+.bbui-web-pin:focus-visible { outline-color: var(--bbui-ring); transition: none; }
+.bbui-web-pin:active { transform: translate(-50%, calc(-50% + 1px)); }
+.bbui-web-pin[aria-pressed="true"] { background: var(--bbui-accent); color: var(--bbui-action-ink); z-index: 1; }
+@media (hover: hover) {
+  .bbui-web-pin:hover { background: var(--bbui-accent-soft); }
+  .bbui-web-pin[aria-pressed="true"]:hover { background: var(--bbui-accent); }
+}
+
+.bbui-web-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--bbui-s1);
+}
+.bbui-web-day {
+  display: flex;
+  align-items: center;
+  gap: var(--bbui-s2);
+  padding: var(--bbui-s2) var(--bbui-s2) var(--bbui-s1);
+  font: var(--bbui-head);
+}
+.bbui-web-place {
+  appearance: none;
+  display: flex;
+  gap: var(--bbui-s2);
+  width: 100%;
+  min-height: 32px;
+  padding: var(--bbui-s1) var(--bbui-s2);
+  border: 0;
+  border-radius: var(--bbui-r-control);
+  background: transparent;
+  color: var(--bbui-ink);
+  font: var(--bbui-text);
+  text-align: left;
+  cursor: pointer;
+  outline: 2px solid transparent;
+  outline-offset: 0;
+  transition: background-color var(--bbui-micro) var(--bbui-ease-out);
+}
+.bbui-web-place:focus-visible { outline-color: var(--bbui-ring); transition: none; }
+.bbui-web-place:active { transform: translateY(1px); }
+.bbui-web-place:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+.bbui-web-place[aria-pressed="true"] { background: var(--bbui-accent-soft); }
+@media (hover: hover) {
+  .bbui-web-place:not(:disabled):hover { background: var(--bbui-well); }
+  .bbui-web-place[aria-pressed="true"]:hover { background: var(--bbui-accent-soft); }
+}
+.bbui-web-num {
+  flex: none;
+  min-width: 18px;
+  font: var(--bbui-head);
+  color: var(--bbui-muted);
+  font-variant-numeric: tabular-nums;
+}
+.bbui-web-place-text {
+  display: grid;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.bbui-web-tour {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--bbui-s2);
+}
+
+.bbui-web-credit {
+  font: var(--bbui-tiny);
+  color: var(--bbui-muted);
+  overflow-wrap: anywhere;
+}
+.bbui-web-credit a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.bbui-web-credit a:focus-visible { outline: 2px solid var(--bbui-ring); outline-offset: 2px; border-radius: var(--bbui-r-control); }
+
+/* ImageSearch and the Map's place photo. */
+.bbui-web-photo {
+  margin: 0;
+  display: grid;
+  gap: var(--bbui-s2);
+}
+.bbui-web-photo-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--bbui-r-well);
+  background: var(--bbui-well);
+}
+.bbui-web-photo[data-aspect="square"] .bbui-web-photo-frame,
+.bbui-web-photo-frame[data-aspect="square"] { aspect-ratio: 1; max-width: 420px; }
+.bbui-web-photo[data-aspect="tall"] .bbui-web-photo-frame,
+.bbui-web-photo-frame[data-aspect="tall"] { aspect-ratio: 3 / 4; max-width: 360px; }
+.bbui-web-photo-frame > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.bbui-web-photo-frame > .bbui-skeleton { position: absolute; inset: 0; }
+.bbui-web-photo-frame > .bbui-skeleton > span { height: 100% !important; border-radius: 0; }
+
+/* App: the frame is sized to its page by the bridge. */
+.bbui-web-app {
+  margin: 0;
+  display: grid;
+  gap: var(--bbui-s2);
+}
+.bbui-web-frame-app {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: transparent;
+}
+.bbui-web-source {
+  margin: 0;
+  max-height: 240px;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.bbui-web-details > summary { cursor: pointer; min-height: 32px; display: flex; align-items: center; }
+.bbui-web-details > summary:focus-visible { outline: 2px solid var(--bbui-ring); border-radius: var(--bbui-r-control); }
+.bbui-web-confirm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--bbui-s2);
+}
+.bbui-web-confirm > .bbui-label { flex: 1 1 200px; min-width: 0; overflow-wrap: anywhere; }
+.bbui-web-note { margin: 0; overflow-wrap: anywhere; }
+
+/* Shader. */
+.bbui-web-shader {
+  margin: 0;
+  display: grid;
+  gap: var(--bbui-s2);
+}
+.bbui-web-canvas {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--bbui-r-well);
+  background: var(--bbui-well);
+  touch-action: none;
+}
+.bbui-web-canvas-wait { opacity: 0.55; }
+.bbui-web-shader-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--bbui-s3);
+}
+.bbui-web-errors {
+  margin: 0;
+  padding-left: var(--bbui-s4);
+  display: grid;
+  gap: var(--bbui-s1);
+}
+.bbui-web-code-line {
+  display: block;
+  margin-top: var(--bbui-s1);
+  color: var(--bbui-ink);
+  overflow-wrap: anywhere;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bbui-web-pin, .bbui-web-place { transition: none; }
+}

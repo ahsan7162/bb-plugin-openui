@@ -1,0 +1,152 @@
+/* Hallmark · shape: app screen · scope: component group · genre: modern-minimal · theme: BB (by request: BB's own tokens) · states: 8 · v2.0.0 */
+/* Numbers and charts. Tokens from kit.css only; marks mount when the reply stops streaming and draw in once. */
+/* waive 46a-gauge: Gauge is the honest form DESIGN.md allows, a half arc showing one level against its limit with the figure, no needle or dial ticks. */
+
+.bbui-numbers {
+  display: grid;
+  gap: var(--bbui-s2);
+  margin: 0;
+  min-width: 0;
+}
+.bbui-numbers > * { min-width: 0; }
+.bbui-numbers-name { overflow-wrap: anywhere; min-width: 0; }
+.bbui-numbers-value { font: var(--bbui-head); color: var(--bbui-ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.bbui-numbers-share { font: var(--bbui-small); color: var(--bbui-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.bbui-numbers-tick { font: var(--bbui-tiny); color: var(--bbui-muted); fill: var(--bbui-muted); font-variant-numeric: tabular-nums; }
+.bbui-numbers-unit { justify-self: end; }
+.bbui-numbers-scroll { overflow-x: auto; min-width: 0; }
+
+/* Draw once: marks are not mounted while streaming (Drawn in numbers.tsx), then grow or fade in on mount. */
+.bbui-numbers-gx { transform-origin: left center; animation: bbui-numbers-grow-x var(--bbui-long) var(--bbui-ease-out) both; }
+.bbui-numbers-gy { transform-box: fill-box; transform-origin: center bottom; animation: bbui-numbers-grow-y var(--bbui-long) var(--bbui-ease-out) both; }
+.bbui-numbers-fade { animation: bbui-numbers-fade var(--bbui-long) var(--bbui-ease-out) both; }
+@keyframes bbui-numbers-grow-x { from { transform: scaleX(0); } }
+@keyframes bbui-numbers-grow-y { from { transform: scaleY(0); } }
+@keyframes bbui-numbers-fade { from { opacity: 0; } }
+
+/* Colour: one tone per mark through --bbui-numbers-fill; series and levels as accent lightness steps. */
+.bbui-numbers-tone { background: var(--bbui-numbers-fill); }
+.bbui-numbers-s0 { background: var(--bbui-accent); }
+.bbui-numbers-s1 { background: color-mix(in oklch, var(--bbui-accent) 78%, var(--bbui-surface)); }
+.bbui-numbers-s2 { background: color-mix(in oklch, var(--bbui-accent) 56%, var(--bbui-surface)); }
+.bbui-numbers-s3 { background: color-mix(in oklch, var(--bbui-accent) 38%, var(--bbui-surface)); }
+.bbui-numbers-s4 { background: color-mix(in oklch, var(--bbui-accent) 24%, var(--bbui-surface)); }
+.bbui-numbers-s5 { background: var(--bbui-muted); }
+.bbui-numbers-l0 { --bbui-numbers-level: var(--bbui-well); }
+.bbui-numbers-l1 { --bbui-numbers-level: color-mix(in oklch, var(--bbui-accent) 28%, var(--bbui-well)); }
+.bbui-numbers-l2 { --bbui-numbers-level: color-mix(in oklch, var(--bbui-accent) 50%, var(--bbui-well)); }
+.bbui-numbers-l3 { --bbui-numbers-level: color-mix(in oklch, var(--bbui-accent) 75%, var(--bbui-well)); }
+.bbui-numbers-l4 { --bbui-numbers-level: var(--bbui-accent); }
+:is(.bbui-numbers-l0, .bbui-numbers-l1, .bbui-numbers-l2, .bbui-numbers-l3, .bbui-numbers-l4) { background: var(--bbui-numbers-level); fill: var(--bbui-numbers-level); }
+.bbui-numbers-swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; flex: none; }
+
+/* Slim bars: Progress and Funnel. */
+.bbui-numbers-progress-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--bbui-s3);
+  min-width: 0;
+}
+.bbui-numbers-track, .bbui-numbers-lane { display: flex; border-radius: 2px; }
+.bbui-numbers-track { height: 6px; background: var(--bbui-well); }
+.bbui-numbers-lane { height: 16px; }
+.bbui-numbers-bar { display: block; height: 100%; border-radius: 0 2px 2px 0; background: var(--bbui-numbers-fill); min-width: 1px; }
+
+/* Gauge: one level against its limit. */
+.bbui-numbers-gauge { justify-items: center; gap: var(--bbui-s1); }
+.bbui-numbers-gauge-dial { position: relative; width: 160px; }
+.bbui-numbers-gauge-dial svg { display: block; }
+.bbui-numbers-gauge-track, .bbui-numbers-gauge-arc { fill: none; stroke-width: 10px; }
+.bbui-numbers-gauge-track { stroke: var(--bbui-well); }
+.bbui-numbers-gauge-arc { stroke: var(--bbui-numbers-fill); }
+.bbui-numbers-gauge-figure { position: absolute; inset: auto 0 0; text-align: center; white-space: nowrap; }
+.bbui-numbers-gauge-ends { display: flex; justify-content: space-between; width: 160px; padding: 0 var(--bbui-s1); box-sizing: border-box; }
+.bbui-numbers-gauge-label { text-align: center; }
+
+/* Sparkline: inline, sits in a table cell or a sentence. */
+.bbui-numbers-spark { display: inline-flex; align-items: center; gap: var(--bbui-s2); vertical-align: middle; }
+.bbui-numbers-spark svg { display: block; flex: none; overflow: visible; }
+.bbui-numbers-spark-stop { stop-color: var(--bbui-numbers-fill); stop-opacity: 0.22; }
+.bbui-numbers-line { fill: none; stroke: var(--bbui-numbers-fill); stroke-width: 2px; stroke-linejoin: round; stroke-linecap: round; }
+.bbui-numbers-dot { fill: var(--bbui-numbers-fill); stroke: var(--bbui-surface); stroke-width: 1.5px; }
+
+/* SegmentedBar: one whole, a legend that names every share. */
+.bbui-numbers-segments { gap: var(--bbui-s3); }
+.bbui-numbers-segbar { height: 12px; border-radius: 0 2px 2px 0; overflow: hidden; }
+.bbui-numbers-segfill { display: flex; gap: 2px; height: 100%; }
+.bbui-numbers-segfill > span { flex-basis: 0; min-width: 2px; }
+.bbui-numbers-legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  column-gap: var(--bbui-s3);
+  row-gap: var(--bbui-s1);
+  align-items: baseline;
+}
+.bbui-numbers-legend li { display: contents; }
+.bbui-numbers-legend .bbui-numbers-swatch { align-self: center; }
+.bbui-numbers-legend .bbui-numbers-value, .bbui-numbers-legend .bbui-numbers-share { text-align: right; }
+.bbui-numbers-legend .bbui-numbers-value { font: var(--bbui-text); }
+
+/* CalendarHeatmap and Heatmap keys. */
+.bbui-numbers-key { display: flex; align-items: center; gap: var(--bbui-s1); justify-self: end; }
+.bbui-numbers-key > span:first-child { margin-right: var(--bbui-s1); }
+.bbui-numbers-key > span:last-child { margin-left: var(--bbui-s1); }
+.bbui-numbers-calendar svg { display: block; }
+
+/* Treemap: absolute tiles in measured pixels, 1px surface seams. */
+.bbui-numbers-treemap-area { position: relative; overflow: hidden; border-radius: var(--bbui-r-well); }
+.bbui-numbers-tile { position: absolute; box-sizing: border-box; overflow: hidden; }
+.bbui-numbers-tile:not(.bbui-numbers-group) { border: 1px solid var(--bbui-surface); padding: var(--bbui-s1) var(--bbui-s2); }
+.bbui-numbers-group { padding: 2px var(--bbui-s1); pointer-events: none; }
+.bbui-numbers-group .bbui-numbers-tile-text { color: var(--bbui-muted); }
+.bbui-numbers-tile-text { display: block; font: var(--bbui-small); color: var(--bbui-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bbui-numbers-tile-text .bbui-numbers-tick { color: var(--bbui-ink); opacity: 0.8; }
+.bbui-numbers-group .bbui-numbers-tile-text .bbui-numbers-tick { color: var(--bbui-muted); }
+.bbui-numbers-t0 { background: color-mix(in oklch, var(--bbui-accent) 46%, var(--bbui-surface)); }
+.bbui-numbers-t1 { background: color-mix(in oklch, var(--bbui-accent) 34%, var(--bbui-surface)); }
+.bbui-numbers-t2 { background: color-mix(in oklch, var(--bbui-accent) 24%, var(--bbui-surface)); }
+.bbui-numbers-t3 { background: color-mix(in oklch, var(--bbui-accent) 15%, var(--bbui-surface)); }
+
+/* Histogram and BoxPlot. */
+.bbui-numbers-histogram svg, .bbui-numbers-box svg { display: block; overflow: visible; }
+.bbui-numbers-grid { stroke: var(--bbui-rule); stroke-width: 1px; shape-rendering: crispEdges; }
+.bbui-numbers-mark { fill: var(--bbui-accent); }
+.bbui-numbers-box-row { display: grid; gap: 2px; margin-bottom: var(--bbui-s2); }
+.bbui-numbers-whisker { stroke: var(--bbui-muted); stroke-width: 1.5px; }
+.bbui-numbers-box-body { fill: var(--bbui-accent-soft); stroke: var(--bbui-accent); stroke-width: 1.5px; }
+.bbui-numbers-median { stroke: var(--bbui-accent); stroke-width: 2px; }
+.bbui-numbers-outlier { fill: var(--bbui-surface); stroke: var(--bbui-accent); stroke-width: 1.5px; }
+
+/* Heatmap: a grid of shaded cells. */
+.bbui-numbers-matrix { display: grid; gap: 2px; align-items: center; min-width: min-content; }
+.bbui-numbers-col { text-align: center; overflow: hidden; white-space: nowrap; }
+.bbui-numbers-rowname { padding-right: var(--bbui-s2); white-space: nowrap; }
+.bbui-numbers-cell { height: 22px; border-radius: 2px; }
+.bbui-numbers-none { box-shadow: inset 0 0 0 1px var(--bbui-rule); }
+
+/* Funnel. */
+.bbui-numbers-funnel ol { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--bbui-s3); }
+.bbui-numbers-funnel li { display: grid; gap: var(--bbui-s1); }
+
+/* KeyValue: a definition list, hairlines between facts. */
+.bbui-numbers-facts { display: grid; grid-template-columns: minmax(0, max-content) minmax(0, 1fr); margin: 0; }
+.bbui-numbers-fact { display: contents; }
+.bbui-numbers-fact > * { margin: 0; padding: var(--bbui-s2) 0; border-top: 1px solid var(--bbui-rule); min-width: 0; overflow-wrap: anywhere; }
+.bbui-numbers-fact:first-child > * { border-top: 0; padding-top: 0; }
+.bbui-numbers-fact dt { padding-right: var(--bbui-s4); }
+
+/* Grid: equal tiles; one column when the block is narrow. */
+.bbui-numbers-grid { container-type: inline-size; }
+.bbui-numbers-tiles { display: grid; grid-template-columns: repeat(var(--bbui-numbers-cols, 2), minmax(0, 1fr)); gap: var(--bbui-s4); }
+.bbui-numbers-tilecell { min-width: 0; }
+@container (max-width: 480px) {
+  .bbui-numbers-tiles { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(.bbui-numbers-gx, .bbui-numbers-gy, .bbui-numbers-fade) { animation: none; }
+}

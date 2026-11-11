@@ -1,0 +1,125 @@
+/* Hallmark · shape: app screen · scope: component kit · genre: modern-minimal · theme: BB (by request: BB's own tokens) · states: 8 · v2.0.0 */
+/* critique: borrowed BB surfaces, one data accent, tabular figures; flat surface ladder, no card in card. */
+/* waive 46a-gauge: Gauge kept for genui parity, drawn as a level against a limit, never a dashboard dial. */
+
+/* Tokens. Every colour and font below this block goes through one of these. They point at BB's
+   own variables, so BB's light/dark switch and custom themes flow through unchanged. */
+:root {
+  --bbui-font: var(--font-sans, Inter, system-ui, sans-serif);
+  --bbui-mono: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace);
+  --bbui-ink: var(--foreground);
+  --bbui-muted: var(--muted-foreground);
+  --bbui-surface: var(--card);
+  --bbui-well: var(--muted);
+  --bbui-rule: var(--border);
+  --bbui-field: var(--input);
+  --bbui-ring: var(--ring);
+  /* Data accent: marks, the current value, the selected item. The one primary action uses --bbui-action. */
+  --bbui-accent: var(--color-timeline-accent, var(--primary));
+  --bbui-accent-soft: color-mix(in oklch, var(--bbui-accent) 16%, transparent);
+  --bbui-action: var(--primary);
+  --bbui-action-ink: var(--primary-foreground);
+  --bbui-success: var(--success, oklch(72% 0.15 155));
+  --bbui-warning: var(--warning, oklch(72% 0.16 50));
+  --bbui-danger: var(--destructive, oklch(56% 0.19 22));
+  --bbui-attention: var(--attention, oklch(77% 0.15 80));
+  /* Status as text (labels, +/- counts): BB's darker variants; the base colours stay for fills and dots. */
+  --bbui-success-text: var(--success-foreground, oklch(53% 0.14 155));
+  --bbui-warning-text: var(--warning-text, oklch(55% 0.14 50));
+  --bbui-danger-text: var(--destructive-text, oklch(45% 0.19 26));
+
+  --bbui-s1: 4px;
+  --bbui-s2: 8px;
+  --bbui-s3: 12px;
+  --bbui-s4: 16px;
+  --bbui-s6: 24px;
+  --bbui-r-control: calc(var(--radius, 8px) - 2px);
+  --bbui-r-well: var(--radius, 8px);
+
+  --bbui-text: 400 13px/1.55 var(--bbui-font);
+  --bbui-small: 400 12px/1.45 var(--bbui-font);
+  --bbui-tiny: 400 11px/1.4 var(--bbui-font);
+  --bbui-head: 560 13px/1.35 var(--bbui-font);
+  --bbui-figure: 560 22px/1.15 var(--bbui-font);
+
+  --bbui-micro: 120ms;
+  --bbui-short: 220ms;
+  --bbui-long: 420ms;
+  --bbui-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --bbui-ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --bbui-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.bbui {
+  font: var(--bbui-text);
+  color: var(--bbui-ink);
+  font-variant-numeric: tabular-nums;
+  min-width: 0;
+}
+.bbui-label { font: var(--bbui-small); color: var(--bbui-muted); }
+.bbui-head { font: var(--bbui-head); color: var(--bbui-ink); text-wrap: balance; }
+.bbui-figure { font: var(--bbui-figure); color: var(--bbui-ink); font-variant-numeric: tabular-nums; }
+.bbui-mono { font-family: var(--bbui-mono); font-size: 12px; }
+.bbui-well { background: var(--bbui-well); border-radius: var(--bbui-r-well); padding: var(--bbui-s3); }
+.bbui-rule { border: 0; border-top: 1px solid var(--bbui-rule); margin: 0; }
+
+/* The secondary control. The one primary action per block uses data-variant="primary". */
+.bbui-btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bbui-s2);
+  position: relative;
+  min-height: 32px;
+  padding: 0 var(--bbui-s3);
+  border: 1px solid var(--bbui-rule);
+  border-radius: var(--bbui-r-control);
+  background: transparent;
+  color: var(--bbui-ink);
+  font: var(--bbui-head);
+  cursor: pointer;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition: background-color var(--bbui-micro) var(--bbui-ease-out), border-color var(--bbui-micro) var(--bbui-ease-out),
+    transform var(--bbui-micro) var(--bbui-ease-out);
+}
+.bbui-btn::before { content: ""; position: absolute; inset: -6px; } /* 44px hit area */
+.bbui-btn:focus-visible { outline-color: var(--bbui-ring); transition: none; }
+@media (hover: hover) {
+  .bbui-btn:hover { background: var(--bbui-well); }
+  .bbui-btn[data-variant="primary"]:hover { background: color-mix(in oklch, var(--bbui-action) 88%, var(--bbui-ink)); }
+}
+.bbui-btn:active { transform: translateY(1px); }
+.bbui-btn[data-variant="primary"] { background: var(--bbui-action); border-color: transparent; color: var(--bbui-action-ink); }
+.bbui-btn:disabled, .bbui-btn[aria-disabled="true"] { opacity: 0.55; cursor: not-allowed; transform: none; }
+.bbui-btn[data-state="loading"] { cursor: progress; }
+.bbui-btn[data-state="error"] { border-color: var(--bbui-danger); }
+.bbui-btn[data-state="success"] { border-color: var(--bbui-success); }
+
+/* Loading, empty and error: every region that loads data draws all three. */
+.bbui-skeleton {
+  display: grid;
+  gap: var(--bbui-s2);
+}
+.bbui-skeleton > span {
+  display: block;
+  height: 12px;
+  border-radius: var(--bbui-r-control);
+  background: var(--bbui-well);
+  animation: bbui-pulse 1.4s var(--bbui-ease-in-out) infinite;
+}
+@keyframes bbui-pulse { 50% { opacity: 0.45; } }
+.bbui-empty, .bbui-error {
+  display: grid;
+  gap: var(--bbui-s1);
+  padding: var(--bbui-s3);
+  border-radius: var(--bbui-r-well);
+  background: var(--bbui-well);
+}
+.bbui-error { box-shadow: inset 2px 0 0 var(--bbui-danger); }
+.bbui-error .bbui-label { overflow-wrap: anywhere; }
+
+@media (prefers-reduced-motion: reduce) {
+  .bbui *, .bbui { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+  .bbui-skeleton > span { animation: none; }
+}

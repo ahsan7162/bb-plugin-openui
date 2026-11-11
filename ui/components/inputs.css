@@ -1,0 +1,217 @@
+/* Hallmark · shape: app screen · scope: Inputs and learning group · genre: modern-minimal · theme: BB (kit tokens) · states: 8 · v1.0.0 */
+/* Inputs and learning (inputs.tsx). Tokens from kit.css only; buttons are the kit's .bbui-btn. */
+
+.bbui-inputs-stack { display: grid; gap: var(--bbui-s2); min-width: 0; }
+.bbui-inputs-stack > * { min-width: 0; }
+.bbui-inputs-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--bbui-s2); min-width: 0; }
+.bbui-inputs-row > * { min-width: 0; }
+.bbui-inputs-spread { justify-content: space-between; flex-wrap: nowrap; }
+.bbui-inputs-good { color: var(--bbui-success-text); }
+.bbui-inputs-bad { color: var(--bbui-danger-text); }
+.bbui-inputs-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Icon-only control: the kit button squared to 32px; its ::before keeps the 44px hit area. */
+.bbui-btn.bbui-inputs-icon { width: 32px; padding: 0; justify-content: center; flex: none; }
+
+/* Text and number fields. */
+.bbui-inputs-field {
+  flex: 1 1 8rem;
+  min-width: 0;
+  height: 32px;
+  padding: 0 var(--bbui-s2);
+  border: 1px solid var(--bbui-field);
+  border-radius: var(--bbui-r-control);
+  background: transparent;
+  color: var(--bbui-ink);
+  font: var(--bbui-text);
+  outline: 2px solid transparent;
+  outline-offset: 1px;
+  transition: border-color var(--bbui-micro) var(--bbui-ease-out);
+}
+.bbui-inputs-field::placeholder { color: var(--bbui-muted); }
+@media (hover: hover) {
+  .bbui-inputs-field:hover:not(:disabled) { border-color: color-mix(in oklch, var(--bbui-field), var(--bbui-ink) 30%); }
+}
+.bbui-inputs-field:focus-visible { outline-color: var(--bbui-ring); transition: none; }
+.bbui-inputs-field:disabled { opacity: 0.55; cursor: not-allowed; }
+.bbui-inputs-field[aria-invalid="true"] { border-color: var(--bbui-danger); }
+
+/* Stepper */
+.bbui-inputs-stepper { display: flex; align-items: center; gap: var(--bbui-s1); }
+.bbui-inputs-number {
+  flex: 0 0 4.5rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+.bbui-inputs-number::-webkit-inner-spin-button,
+.bbui-inputs-number::-webkit-outer-spin-button { appearance: none; margin: 0; }
+
+/* Rating: native radios, visually hidden; the star is the label. */
+.bbui-inputs-rating { border: 0; margin: 0; padding: 0; display: grid; gap: var(--bbui-s1); }
+.bbui-inputs-rating legend { padding: 0; margin-bottom: var(--bbui-s1); }
+.bbui-inputs-stars { display: flex; align-items: center; gap: 0; }
+.bbui-inputs-stars > .bbui-label { margin-left: var(--bbui-s2); }
+.bbui-inputs-star {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--bbui-r-control);
+  color: var(--bbui-muted);
+  cursor: pointer;
+  outline: 2px solid transparent;
+  transition: color var(--bbui-micro) var(--bbui-ease-out), transform var(--bbui-micro) var(--bbui-ease-out);
+}
+.bbui-inputs-star::before { content: ""; position: absolute; inset: -6px 0; }
+.bbui-inputs-star svg { fill: transparent; transition: fill var(--bbui-micro) var(--bbui-ease-out); }
+.bbui-inputs-star.is-on { color: var(--bbui-accent); }
+.bbui-inputs-star.is-on svg { fill: var(--bbui-accent); }
+@media (hover: hover) {
+  .bbui-inputs-rating:not(:disabled) .bbui-inputs-star:hover { color: var(--bbui-ink); }
+}
+.bbui-inputs-star:has(input:focus-visible) { outline-color: var(--bbui-ring); }
+.bbui-inputs-star:active { transform: translateY(1px); }
+.bbui-inputs-rating:disabled .bbui-inputs-star { opacity: 0.55; cursor: not-allowed; }
+
+/* ListEditor */
+.bbui-inputs-rows { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--bbui-s1); }
+.bbui-inputs-row .bbui-inputs-field { flex-basis: 10rem; }
+.bbui-inputs-rows .bbui-inputs-row { flex-wrap: nowrap; gap: var(--bbui-s1); }
+
+/* Swatches */
+.bbui-inputs-palette {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+  gap: var(--bbui-s2);
+}
+.bbui-inputs-palette > li { min-width: 0; }
+.bbui-btn.bbui-inputs-swatch { width: 100%; min-height: 44px; padding: var(--bbui-s1) var(--bbui-s2); text-align: left; font: var(--bbui-small); }
+.bbui-btn.bbui-inputs-swatch.is-picked { border-color: var(--bbui-accent); background: var(--bbui-accent-soft); }
+.bbui-inputs-chip {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--bbui-r-control);
+  box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--bbui-ink) 14%, transparent);
+}
+.bbui-inputs-swatch-text { display: grid; flex: 1; min-width: 0; }
+.bbui-inputs-swatch-value { color: var(--bbui-muted); overflow-wrap: anywhere; }
+.bbui-inputs-copy { color: var(--bbui-muted); opacity: 0; transition: opacity var(--bbui-micro) var(--bbui-ease-out); }
+.bbui-inputs-swatch:focus-visible .bbui-inputs-copy { opacity: 1; }
+@media (hover: hover) {
+  .bbui-inputs-swatch:hover .bbui-inputs-copy { opacity: 1; }
+}
+.bbui-inputs-ok { color: var(--bbui-success-text); }
+
+/* FollowUps: a quiet list, muted until hovered or focused. */
+.bbui-inputs-followups ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.bbui-btn.bbui-inputs-followup {
+  width: 100%;
+  border-color: transparent;
+  color: var(--bbui-muted);
+  font: var(--bbui-text);
+  text-align: left;
+  padding: var(--bbui-s1) var(--bbui-s2);
+}
+.bbui-inputs-followup > span { min-width: 0; overflow-wrap: anywhere; }
+.bbui-inputs-followup svg { flex: none; }
+@media (hover: hover) {
+  .bbui-btn.bbui-inputs-followup:hover:not(:disabled) { color: var(--bbui-ink); }
+}
+.bbui-btn.bbui-inputs-followup.is-sent { color: var(--bbui-ink); background: var(--bbui-accent-soft); opacity: 1; }
+
+/* Timer and the shared progress bar (scaleX from the left, never width). */
+.bbui-inputs-timer-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: var(--bbui-s2); }
+.bbui-inputs-clock { font-variant-numeric: tabular-nums; }
+.bbui-inputs-bar { display: block; height: 4px; border-radius: var(--bbui-r-control); background: var(--bbui-well); overflow: hidden; }
+.bbui-inputs-bar-fill {
+  display: block;
+  height: 100%;
+  background: var(--bbui-accent);
+  transform-origin: left center;
+  transition: transform var(--bbui-long) var(--bbui-ease-out);
+}
+.bbui-inputs-bar-live { transition: none; } /* follows the Timer's tick directly */
+
+/* Quiz */
+.bbui-inputs-options { border: 0; margin: 0; padding: 0; display: grid; gap: var(--bbui-s1); min-width: 0; }
+.bbui-inputs-options legend { padding: 0; margin-bottom: var(--bbui-s2); }
+.bbui-inputs-option {
+  display: flex;
+  align-items: center;
+  gap: var(--bbui-s2);
+  min-height: 36px;
+  padding: var(--bbui-s1) var(--bbui-s2);
+  border: 1px solid var(--bbui-rule);
+  border-radius: var(--bbui-r-control);
+  cursor: pointer;
+  transition: background-color var(--bbui-micro) var(--bbui-ease-out), border-color var(--bbui-micro) var(--bbui-ease-out);
+}
+.bbui-inputs-option > span:first-of-type { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.bbui-inputs-option input { margin: 0; accent-color: var(--bbui-accent); }
+.bbui-inputs-option input:focus-visible { outline: 2px solid var(--bbui-ring); outline-offset: 2px; }
+@media (hover: hover) {
+  .bbui-inputs-options:not(:disabled) .bbui-inputs-option:hover { background: var(--bbui-well); }
+}
+.bbui-inputs-option.is-picked { border-color: var(--bbui-accent); background: var(--bbui-accent-soft); }
+.bbui-inputs-option.is-right { border-color: var(--bbui-success); }
+.bbui-inputs-option.is-wrong { border-color: var(--bbui-danger); }
+.bbui-inputs-options:disabled .bbui-inputs-option { cursor: not-allowed; }
+.bbui-inputs-options:disabled .bbui-inputs-option:not(.is-right):not(.is-wrong) { opacity: 0.55; color: var(--bbui-muted); background: transparent; cursor: not-allowed; }
+.bbui-inputs-mark { display: inline-flex; align-items: center; gap: var(--bbui-s1); font: var(--bbui-small); color: var(--bbui-muted); flex: none; }
+.bbui-inputs-option.is-right .bbui-inputs-mark svg { color: var(--bbui-success-text); }
+.bbui-inputs-option.is-wrong .bbui-inputs-mark svg { color: var(--bbui-danger-text); }
+.bbui-inputs-feedback { margin: 0; }
+
+/* Flashcards: both faces share one cell and crossfade; the kit's reduced-motion rule makes it a swap. */
+.bbui-inputs-card {
+  appearance: none;
+  display: grid;
+  grid-template-areas: "face" "hint";
+  gap: var(--bbui-s2);
+  min-height: 132px;
+  padding: var(--bbui-s4);
+  border: 0;
+  border-radius: var(--bbui-r-well);
+  background: var(--bbui-well);
+  color: var(--bbui-ink);
+  font: var(--bbui-text);
+  text-align: center;
+  cursor: pointer;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition: transform var(--bbui-micro) var(--bbui-ease-out);
+}
+.bbui-inputs-card:focus-visible { outline-color: var(--bbui-ring); }
+.bbui-inputs-card:active { transform: translateY(1px); }
+.bbui-inputs-card:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+.bbui-inputs-face {
+  grid-area: face;
+  align-self: center;
+  overflow-wrap: anywhere;
+  opacity: 0;
+  transition: opacity var(--bbui-short) var(--bbui-ease-in-out);
+}
+.bbui-inputs-face[data-shown="true"] { opacity: 1; }
+.bbui-inputs-hint { grid-area: hint; }
+
+/* Walkthrough */
+.bbui-inputs-title { margin: 0; }
+.bbui-inputs-md { min-width: 0; overflow-wrap: anywhere; }
+
+@media (prefers-reduced-motion: reduce) {
+  .bbui-inputs-face, .bbui-inputs-bar-fill, .bbui-inputs-star, .bbui-inputs-card, .bbui-inputs-copy { transition: none; }
+}

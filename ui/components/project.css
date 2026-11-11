@@ -1,0 +1,164 @@
+/* Hallmark · shape: app screen · scope: BB project group · genre: modern-minimal · theme: BB (kit tokens) · states: 8 · v1.0.0 */
+/* BB project group: Changes, Commits, PullRequest, Threads, Environments. Tokens from kit.css only. */
+
+.bbui-project {
+  display: grid;
+  gap: var(--bbui-s2);
+}
+.bbui-project-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--bbui-s1) var(--bbui-s2);
+  color: var(--bbui-muted);
+}
+.bbui-project-head > * { min-width: 0; }
+.bbui-project-head .bbui-label { overflow-wrap: anywhere; }
+
+.bbui-project-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--bbui-s2);
+  margin: 0;
+}
+.bbui-project-counts {
+  display: inline-flex;
+  gap: var(--bbui-s1);
+  font: var(--bbui-small);
+  white-space: nowrap;
+}
+.bbui-project-add { color: var(--bbui-success-text); }
+.bbui-project-del { color: var(--bbui-danger-text); }
+
+/* Lists: hairlines between rows, no outer frame. */
+.bbui-project-list, .bbui-project-envs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.bbui-project-item + .bbui-project-item,
+.bbui-project-env + .bbui-project-env { border-top: 1px solid var(--bbui-rule); }
+
+/* A full-width row control: disclosure or open-thread. */
+.bbui-project-row {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  gap: var(--bbui-s2);
+  width: 100%;
+  min-height: 32px;
+  padding: var(--bbui-s1) var(--bbui-s2);
+  border: 0;
+  border-radius: var(--bbui-r-control);
+  background: transparent;
+  color: var(--bbui-ink);
+  font: var(--bbui-text);
+  text-align: left;
+  cursor: pointer;
+  outline: 2px solid transparent;
+  outline-offset: -2px;
+  transition: background-color var(--bbui-micro) var(--bbui-ease-out), transform var(--bbui-micro) var(--bbui-ease-out);
+}
+.bbui-project-row > * { min-width: 0; }
+.bbui-project-row:focus-visible { outline-color: var(--bbui-ring); transition: none; }
+@media (hover: hover) {
+  .bbui-project-row:hover { background: var(--bbui-well); }
+}
+.bbui-project-row:active { transform: translateY(1px); }
+.bbui-project-row:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+
+.bbui-project-chevron {
+  flex: none;
+  color: var(--bbui-muted);
+  transition: transform var(--bbui-micro) var(--bbui-ease-out);
+}
+.bbui-project-row[aria-expanded="true"] .bbui-project-chevron { transform: rotate(90deg); }
+
+.bbui-project-grow { flex: 1 1 auto; }
+.bbui-project-path { overflow-wrap: anywhere; }
+.bbui-project-sha { flex: none; color: var(--bbui-muted); }
+.bbui-project-glyph { display: inline-flex; flex: none; width: 16px; justify-content: center; }
+.bbui-project-row .bbui-label { flex: none; }
+
+.bbui-project-note { margin: 0; padding: var(--bbui-s1) var(--bbui-s2); }
+.bbui-project-diff {
+  display: grid;
+  gap: var(--bbui-s1);
+  padding: var(--bbui-s1) 0 var(--bbui-s2);
+  min-width: 0;
+  overflow-x: auto;
+}
+/* A commit's files, under its row: an indent and a hairline, not a nested card. */
+.bbui-project-nested {
+  display: grid;
+  gap: var(--bbui-s2);
+  margin: 0 0 var(--bbui-s2) var(--bbui-s3);
+  padding-left: var(--bbui-s3);
+  border-left: 1px solid var(--bbui-rule);
+  min-width: 0;
+}
+.bbui-project-missing { padding: var(--bbui-s2); }
+
+/* Pull request */
+.bbui-project-pr-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--bbui-s1) var(--bbui-s2);
+  margin: 0;
+  font: var(--bbui-head);
+}
+.bbui-project-link {
+  color: var(--bbui-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--bbui-rule);
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+  border-radius: var(--bbui-r-control);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition: text-decoration-color var(--bbui-micro) var(--bbui-ease-out);
+}
+.bbui-project-link:focus-visible { outline-color: var(--bbui-ring); transition: none; }
+@media (hover: hover) {
+  .bbui-project-link:hover { text-decoration-color: currentColor; }
+}
+.bbui-project-attention { margin: 0; font: var(--bbui-head); }
+.bbui-project-facts {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: var(--bbui-s1) var(--bbui-s4);
+  margin: 0;
+}
+.bbui-project-facts dd { margin: 0; min-width: 0; }
+
+/* Real state only: checks, PR state, attention. */
+.bbui-project-tone[data-tone="good"] { color: var(--bbui-success-text); }
+.bbui-project-tone[data-tone="bad"] { color: var(--bbui-danger-text); }
+.bbui-project-tone[data-tone="warn"] { color: var(--bbui-warning-text); }
+.bbui-project-tone[data-tone="accent"] { color: var(--bbui-accent); }
+.bbui-project-tone[data-tone="neutral"] { color: var(--bbui-muted); }
+
+/* Environments */
+.bbui-project-env {
+  display: grid;
+  gap: var(--bbui-s1);
+  padding: var(--bbui-s2) var(--bbui-s2) var(--bbui-s2) var(--bbui-s3);
+  min-width: 0;
+}
+/* The reply thread's own environment: the one thing this list is about. */
+.bbui-project-env[aria-current="true"] { box-shadow: inset 2px 0 0 var(--bbui-accent); }
+.bbui-project-env-head, .bbui-project-env-facts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--bbui-s1) var(--bbui-s3);
+  margin: 0;
+}
+.bbui-project-env-head > *, .bbui-project-env-facts > * { min-width: 0; }
+.bbui-project-env-threads { margin-left: calc(-1 * var(--bbui-s2)); }
+
+@media (prefers-reduced-motion: reduce) {
+  .bbui-project-row, .bbui-project-chevron, .bbui-project-link { transition: none; }
+}

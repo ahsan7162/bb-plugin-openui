@@ -1,0 +1,72 @@
+/* OpenUI's chat app draws the reply bubble around its UI; BB doesn't, so the fence draws a card like BB's own. */
+.openui-fence {
+  margin: 0.75rem 0;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) + 4px);
+  background: var(--card);
+  color: var(--card-foreground);
+  font-family: var(--font-sans);
+}
+
+/* Placeholder while a Diagram's Mermaid source is still streaming. */
+.openui-diagram-pending {
+  height: 160px;
+  border-radius: var(--radius);
+  background: var(--muted);
+  animation: openui-pulse 1.4s ease-in-out infinite;
+}
+@keyframes openui-pulse { 50% { opacity: 0.5; } }
+@media (prefers-reduced-motion: reduce) { .openui-diagram-pending { animation: none; } }
+
+/* Diagram: BB draws it as a code block (bordered box, "MERMAID" label) that looks pasted into the card.
+   shortcut: these selectors follow BB 0.49's Tailwind classes on its Mermaid block; re-check if BB restyles it. */
+.openui-diagram [class~="bg-surface-recessed"] {
+  position: relative;
+  margin: 0;
+  border: 0;
+  background: transparent;
+}
+/* Header: drop the label, float the source/expand/copy buttons in the corner. */
+.openui-diagram [class~="bg-surface-recessed"] > [class~="justify-between"] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  padding: 2px;
+  border-radius: var(--radius);
+  background: var(--card);
+  transition: opacity 0.15s;
+}
+.openui-diagram [class~="justify-between"] > [class~="uppercase"] { display: none; }
+@media (hover: hover) {
+  .openui-diagram [class~="bg-surface-recessed"]:not(:hover):not(:focus-within) > [class~="justify-between"] { opacity: 0; }
+}
+.openui-diagram [class~="bg-surface-recessed"] > [class~="overflow-x-auto"] { padding: 4px 0 0; }
+/* Tall diagrams stay readable inline; the expand button shows them full size. */
+.openui-diagram [role="img"] svg { max-height: 480px; }
+
+/* Softer strokes: BB colours edges with --primary, which outweighs the faint node borders.
+   !important because Mermaid's own <style> uses #id selectors. */
+.openui-diagram svg .flowchart-link,
+.openui-diagram svg .relation,
+.openui-diagram svg [class^="messageLine"] {
+  stroke: var(--muted-foreground) !important;
+  stroke-width: 1.5px !important;
+}
+.openui-diagram svg marker path,
+.openui-diagram svg .arrowheadPath {
+  fill: var(--muted-foreground) !important;
+  stroke: var(--muted-foreground) !important;
+}
+.openui-diagram svg .node :is(rect, polygon, circle, ellipse, path),
+.openui-diagram svg .cluster rect {
+  stroke: color-mix(in oklab, var(--foreground) 22%, transparent) !important;
+}
+.openui-diagram svg .node rect,
+.openui-diagram svg .cluster rect { rx: 8px; ry: 8px; }
+/* Edge labels sit on the card, not the page background. */
+.openui-diagram svg .edgeLabel,
+.openui-diagram svg .edgeLabel :is(p, span, div),
+.openui-diagram svg .labelBkg { background-color: var(--card) !important; color: var(--muted-foreground) !important; }
+.openui-diagram svg .edgeLabel rect { fill: var(--card) !important; }

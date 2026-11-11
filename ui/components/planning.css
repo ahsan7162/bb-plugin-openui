@@ -1,0 +1,348 @@
+/* Hallmark · shape: app screen · scope: component group (time and planning) · genre: modern-minimal · theme: BB (kit.css tokens) · states: 8 via kit · v1.0.0 */
+/* Time and planning (planning.tsx). Tokens only, from kit.css. */
+/* Hallmark · waive 26b · buttons are the kit Button (.bbui-btn) · press and disabled states come from kit.css; planning adds no control of its own */
+
+/* Sideways-scrolling regions take keyboard focus so they can be scrolled with arrows. */
+.bbui-planning-board, .bbui-planning-scroll { outline: 2px solid transparent; outline-offset: 2px; border-radius: var(--bbui-r-control); }
+.bbui-planning-board:focus-visible, .bbui-planning-scroll:focus-visible { outline-color: var(--bbui-ring); }
+
+.bbui-planning-timeline, .bbui-planning-chips, .bbui-planning-agenda, .bbui-planning-cards, .bbui-planning-rows,
+.bbui-planning-steps, .bbui-planning-files, .bbui-planning-tasks { list-style: none; margin: 0; padding: 0; }
+.bbui-planning-timeline p, .bbui-planning-step p, .bbui-planning-status p, .bbui-planning-estimate p, .bbui-planning-plan p,
+.bbui-planning-procon dd, .bbui-planning-figures dd { margin: 0; }
+.bbui-planning-plan, .bbui-planning-status, .bbui-planning-decision, .bbui-planning-estimate, .bbui-planning-acceptance,
+.bbui-planning-calendar { display: grid; gap: var(--bbui-s3); }
+
+/* A state: icon in the state's colour, the word in ink. */
+.bbui-planning-state { display: inline-flex; align-items: center; gap: var(--bbui-s1); font: var(--bbui-small); color: var(--bbui-ink); }
+.bbui-planning-state > svg { flex: none; color: var(--bbui-planning-tone); }
+.bbui-planning-meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--bbui-s1) var(--bbui-s3); }
+.bbui-planning-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--bbui-s2); padding-top: var(--bbui-s1); }
+
+/* Timeline: a hairline rail, a hollow mark per event, an icon when the event carries a state. */
+.bbui-planning-event {
+  position: relative;
+  display: grid;
+  gap: 2px;
+  padding: 0 0 var(--bbui-s4) var(--bbui-s6);
+  min-width: 0;
+}
+.bbui-planning-event::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 14px;
+  bottom: -2px;
+  border-left: 1px solid var(--bbui-rule);
+}
+.bbui-planning-event:last-child { padding-bottom: 0; }
+.bbui-planning-event:last-child::before { display: none; }
+.bbui-planning-mark {
+  position: absolute;
+  left: 3px;
+  top: 4px;
+  width: 9px;
+  height: 9px;
+  border: 1px solid var(--bbui-muted);
+  border-radius: 50%;
+  background: var(--bbui-surface);
+}
+.bbui-planning-mark-accent { border-color: var(--bbui-accent); background: var(--bbui-accent); }
+.bbui-planning-mark-icon { left: 0; top: 1px; width: 15px; height: 15px; border: 0; display: grid; place-items: center; color: var(--bbui-planning-tone); }
+.bbui-planning-detail { overflow-wrap: anywhere; }
+
+/* Calendar: month grid, or the agenda when the block is narrow. */
+.bbui-planning-calendar { container-type: inline-size; }
+.bbui-planning-bar-head { display: flex; align-items: center; justify-content: space-between; gap: var(--bbui-s2); }
+.bbui-planning-bar-head h3 { margin: 0; }
+.bbui-planning-nav { display: inline-flex; gap: var(--bbui-s1); }
+.bbui-planning-nav .bbui-btn { padding: 0 var(--bbui-s2); }
+.bbui-planning-month { width: 100%; table-layout: fixed; border-collapse: collapse; }
+.bbui-planning-month th { padding: 0 var(--bbui-s1) var(--bbui-s1); text-align: left; font-weight: 400; }
+.bbui-planning-month td {
+  height: 72px;
+  padding: var(--bbui-s1);
+  vertical-align: top;
+  border-top: 1px solid var(--bbui-rule);
+  min-width: 0;
+}
+.bbui-planning-off { background: transparent; }
+.bbui-planning-daynum {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 var(--bbui-s1);
+  border-radius: var(--bbui-r-control);
+  font: var(--bbui-small);
+  color: var(--bbui-muted);
+}
+.bbui-planning-now .bbui-planning-daynum { background: var(--bbui-accent-soft); color: var(--bbui-ink); font-weight: 560; }
+.bbui-planning-chips { display: grid; gap: 2px; margin-top: 2px; min-width: 0; }
+.bbui-planning-chip {
+  padding: 1px var(--bbui-s1);
+  border-radius: var(--bbui-r-control);
+  background: var(--bbui-well);
+  box-shadow: inset 2px 0 0 var(--bbui-planning-tone);
+  font: var(--bbui-tiny);
+  color: var(--bbui-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bbui-planning-chip[data-tone="neutral"] { box-shadow: none; }
+.bbui-planning-agenda { display: none; gap: var(--bbui-s3); }
+.bbui-planning-agenda > li { display: grid; gap: var(--bbui-s1); }
+.bbui-planning-agenda .bbui-planning-chip { white-space: normal; overflow-wrap: anywhere; font: var(--bbui-small); padding: 2px var(--bbui-s2); }
+@container (max-width: 480px) {
+  .bbui-planning-month { display: none; }
+  .bbui-planning-agenda { display: grid; }
+}
+
+/* Roadmap: a label column and a date track; the today line spans every row. */
+.bbui-planning-gantt { --bbui-planning-label: 36%; position: relative; margin: 0; display: grid; }
+.bbui-planning-axis, .bbui-planning-row { display: grid; grid-template-columns: var(--bbui-planning-label) 1fr; min-width: 0; }
+.bbui-planning-axis { height: 20px; border-bottom: 1px solid var(--bbui-rule); }
+.bbui-planning-track { position: relative; min-width: 0; }
+.bbui-planning-tick {
+  position: absolute;
+  left: calc(var(--at) * 100%);
+  bottom: 2px;
+  padding-left: var(--bbui-s1);
+  border-left: 1px solid var(--bbui-rule);
+  font: var(--bbui-tiny);
+  color: var(--bbui-muted);
+  white-space: nowrap;
+}
+.bbui-planning-lane { padding: var(--bbui-s3) 0 var(--bbui-s1); }
+.bbui-planning-row { padding: var(--bbui-s1) 0; border-bottom: 1px solid var(--bbui-rule); align-items: center; }
+.bbui-planning-what { display: grid; padding-right: var(--bbui-s3); min-width: 0; overflow-wrap: anywhere; }
+.bbui-planning-row .bbui-planning-track { height: 20px; }
+.bbui-planning-span {
+  position: absolute;
+  top: 3px;
+  left: calc(var(--at) * 100%);
+  width: calc(var(--len) * 100%);
+  min-width: 4px;
+  height: 14px;
+  border-radius: 2px;
+  background: var(--bbui-accent);
+}
+.bbui-planning-span[data-status="done"] { background: color-mix(in oklch, var(--bbui-accent) 56%, var(--bbui-surface)); }
+.bbui-planning-span[data-status="planned"] { background: transparent; box-shadow: inset 0 0 0 1px var(--bbui-accent); }
+.bbui-planning-span[data-status="at-risk"] { background: var(--bbui-warning); }
+.bbui-planning-span[data-status="blocked"] { background: var(--bbui-danger); }
+.bbui-planning-diamond {
+  position: absolute;
+  top: 5px;
+  left: calc(var(--at) * 100% - 5px);
+  width: 10px;
+  height: 10px;
+  background: var(--bbui-ink);
+  transform: rotate(45deg);
+}
+.bbui-planning-today {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--bbui-planning-label) + (100% - var(--bbui-planning-label)) * var(--at));
+  border-left: 1px solid var(--bbui-accent);
+  pointer-events: none;
+}
+.bbui-planning-today > span { position: absolute; top: 2px; left: var(--bbui-s1); font: var(--bbui-tiny); color: var(--bbui-ink); background: var(--bbui-surface); padding: 0 2px; }
+
+/* Board: columns side by side, scrolling sideways when the chat is narrow. */
+.bbui-planning-board {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(200px, 1fr);
+  gap: var(--bbui-s3);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  padding-bottom: var(--bbui-s1);
+}
+.bbui-planning-column { display: grid; align-content: start; gap: var(--bbui-s2); min-width: 0; }
+.bbui-planning-colhead {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--bbui-s2);
+  margin: 0;
+  padding-bottom: var(--bbui-s1);
+  border-bottom: 1px solid var(--bbui-rule);
+}
+.bbui-planning-none { margin: 0; }
+.bbui-planning-cards { display: grid; gap: var(--bbui-s2); }
+.bbui-planning-card { display: grid; gap: var(--bbui-s1); padding: var(--bbui-s2) var(--bbui-s3); overflow-wrap: anywhere; }
+.bbui-planning-tag {
+  padding: 0 var(--bbui-s1);
+  border: 1px solid var(--bbui-rule);
+  border-radius: var(--bbui-r-control);
+  font: var(--bbui-tiny);
+  color: var(--bbui-muted);
+}
+
+/* Status rows and the shared meter. */
+.bbui-planning-rows > li + li { border-top: 1px solid var(--bbui-rule); }
+.bbui-planning-stream {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--bbui-s1) var(--bbui-s3);
+  align-items: center;
+  padding: var(--bbui-s3) 0;
+}
+.bbui-planning-progress, .bbui-planning-who, .bbui-planning-note { grid-column: 1 / -1; }
+.bbui-planning-progress { display: grid; grid-template-columns: minmax(0, 1fr) 4ch; gap: var(--bbui-s2); align-items: center; }
+.bbui-planning-progress .bbui-label { text-align: right; }
+.bbui-planning-note { overflow-wrap: anywhere; }
+.bbui-planning-meter { display: block; height: 4px; border-radius: 2px; background: var(--bbui-well); overflow: hidden; }
+.bbui-planning-meter > span {
+  display: block;
+  height: 100%;
+  background: var(--bbui-accent);
+  transform: scaleX(var(--at));
+  transform-origin: left;
+  transition: transform var(--bbui-short) var(--bbui-ease-out);
+}
+
+/* Plan steps. */
+.bbui-planning-steps { display: grid; }
+.bbui-planning-step {
+  position: relative;
+  display: grid;
+  gap: var(--bbui-s1);
+  padding: var(--bbui-s3) 0 var(--bbui-s3) var(--bbui-s6);
+  min-width: 0;
+}
+.bbui-planning-step + .bbui-planning-step { border-top: 1px solid var(--bbui-rule); }
+.bbui-planning-num { position: absolute; left: 0; top: var(--bbui-s3); }
+.bbui-planning-files { display: flex; flex-wrap: wrap; gap: var(--bbui-s1) var(--bbui-s3); color: var(--bbui-muted); }
+.bbui-planning-files li { overflow-wrap: anywhere; min-width: 0; }
+
+/* Decision: weight steppers over a ranked matrix. */
+.bbui-planning-weights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bbui-s2) var(--bbui-s4);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+.bbui-planning-weights legend { padding: 0; margin-bottom: var(--bbui-s2); }
+.bbui-planning-weight { display: inline-flex; align-items: center; gap: var(--bbui-s1); }
+.bbui-planning-weight > span:first-child { margin-right: var(--bbui-s1); }
+.bbui-planning-weight .bbui-btn { padding: 0 var(--bbui-s2); }
+.bbui-planning-weight output { min-width: 2ch; text-align: center; font: var(--bbui-head); }
+.bbui-planning-scroll { overflow-x: auto; min-width: 0; }
+.bbui-planning-table { width: 100%; border-collapse: collapse; }
+.bbui-planning-table th, .bbui-planning-table td {
+  padding: var(--bbui-s2) var(--bbui-s2) var(--bbui-s2) 0;
+  border-bottom: 1px solid var(--bbui-rule);
+  text-align: left;
+  vertical-align: top;
+}
+.bbui-planning-table thead th { font-weight: 400; vertical-align: bottom; }
+.bbui-planning-table tbody th { font: var(--bbui-text); min-width: 10ch; }
+.bbui-planning-numcol { text-align: right; white-space: nowrap; }
+.bbui-planning-table .bbui-planning-numcol { text-align: right; }
+.bbui-planning-table thead .bbui-planning-numcol span { color: var(--bbui-ink); }
+.bbui-planning-lead > * { background: var(--bbui-accent-soft); }
+.bbui-planning-lead > th { font-weight: 560; }
+.bbui-planning-score { display: inline-grid; grid-template-columns: 48px auto; gap: var(--bbui-s2); align-items: center; justify-content: end; }
+.bbui-planning-procon { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--bbui-s3) var(--bbui-s4); margin: 0; }
+.bbui-planning-procon > div { display: grid; gap: var(--bbui-s1); align-content: start; }
+.bbui-planning-procon .bbui-planning-state { align-items: flex-start; }
+.bbui-planning-procon .bbui-planning-state > svg { margin-top: 2px; }
+
+/* Estimate: three figures, then one range per task. */
+.bbui-planning-figures { display: flex; flex-wrap: wrap; gap: var(--bbui-s3) var(--bbui-s6); margin: 0; }
+.bbui-planning-figures > div { display: grid; gap: 2px; align-content: start; }
+.bbui-planning-tasks { display: grid; }
+.bbui-planning-task {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--bbui-s1) var(--bbui-s3);
+  padding: var(--bbui-s2) 0;
+  border-top: 1px solid var(--bbui-rule);
+}
+.bbui-planning-task > span:first-child { overflow-wrap: anywhere; }
+.bbui-planning-range { grid-column: 1 / -1; display: block; overflow: visible; }
+.bbui-planning-range-band { fill: color-mix(in oklch, var(--bbui-accent) 38%, var(--bbui-surface)); }
+.bbui-planning-range-mark { fill: var(--bbui-accent); }
+
+/* Acceptance. */
+.bbui-planning-verdict { display: grid; gap: var(--bbui-s1); }
+.bbui-planning-crit { display: grid; gap: 2px; }
+.bbui-planning-cellnote { overflow-wrap: anywhere; }
+.bbui-planning-evidence { color: var(--bbui-muted); overflow-wrap: anywhere; }
+.bbui-planning-acceptance td { white-space: nowrap; }
+
+@media (prefers-reduced-motion: reduce) {
+  .bbui-planning-meter > span { transition: none; }
+}
+
+/* Choice: a carousel, one option per slide so each gets the full width; the next slide peeks in.
+   Native scroll-snap moves it (swipe, trackpad, arrow keys on the focused track); buttons and dots jump. */
+.bbui-planning-choice { display: grid; gap: var(--bbui-s3); }
+.bbui-planning-choice-top { display: flex; align-items: center; justify-content: space-between; gap: var(--bbui-s3); }
+.bbui-planning-choice-top > p { margin: 0; }
+.bbui-planning-choice-nav { display: flex; align-items: center; gap: var(--bbui-s1); flex: none; }
+.bbui-planning-choice-nav > .bbui-label { margin-right: var(--bbui-s1); font-variant-numeric: tabular-nums; }
+.bbui-btn.bbui-planning-choice-arrow { width: 32px; padding: 0; justify-content: center; }
+.bbui-planning-choices {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: var(--bbui-s3);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  border-radius: var(--bbui-r-well);
+}
+.bbui-planning-choices::-webkit-scrollbar { display: none; }
+.bbui-planning-choices:focus-visible { outline-color: var(--bbui-ring); }
+.bbui-planning-choice-card {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--bbui-rule);
+  border-radius: var(--bbui-r-well);
+  background: var(--bbui-surface);
+  transition: border-color var(--bbui-micro) var(--bbui-ease-out);
+}
+.bbui-planning-choices[data-many] > .bbui-planning-choice-card { flex-basis: 88%; }
+.bbui-planning-choice-card[data-recommended] { border-color: color-mix(in oklch, var(--bbui-accent) 45%, var(--bbui-rule)); }
+.bbui-planning-choice-card[data-picked] { border-color: var(--bbui-success); box-shadow: inset 0 0 0 1px var(--bbui-success); }
+/* The whole picture at its own aspect ratio, never cropped; the 16:9 box only holds the loading and error states. */
+img.bbui-planning-choice-img { display: block; width: 100%; height: auto; background: var(--bbui-well); border-bottom: 1px solid var(--bbui-rule); }
+div.bbui-planning-choice-img { display: grid; place-items: center; aspect-ratio: 16 / 9; background: var(--bbui-well); border-bottom: 1px solid var(--bbui-rule); }
+.bbui-planning-choice-body { flex: 1; display: grid; gap: var(--bbui-s2); padding: var(--bbui-s4) var(--bbui-s4) 0; align-content: start; }
+.bbui-planning-choice-body h3 { margin: 0; font: 600 16px/1.3 var(--bbui-font); color: var(--bbui-ink); text-wrap: balance; }
+.bbui-planning-choice-tag { font: var(--bbui-tiny); color: var(--bbui-muted); padding: 1px var(--bbui-s2); border: 1px solid var(--bbui-rule); border-radius: 999px; white-space: nowrap; }
+.bbui-planning-choice-tag[data-tone="accent"] { color: var(--bbui-accent); border-color: color-mix(in oklch, var(--bbui-accent) 40%, transparent); background: var(--bbui-accent-soft); }
+.bbui-planning-choice-points { list-style: disc; margin: 0; padding-left: 1.1em; display: grid; gap: var(--bbui-s1); font: var(--bbui-text); color: var(--bbui-muted); }
+.bbui-planning-choice-foot { padding: var(--bbui-s4); }
+.bbui-planning-choice-foot > .bbui-btn { width: 100%; justify-content: center; }
+.bbui-planning-choice-dots { display: flex; justify-content: center; gap: var(--bbui-s2); }
+.bbui-planning-choice-dots > button {
+  appearance: none;
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: var(--bbui-rule);
+  cursor: pointer;
+  transition: width var(--bbui-short) var(--bbui-ease-out), background-color var(--bbui-micro);
+}
+.bbui-planning-choice-dots > button[aria-current] { width: 20px; background: var(--bbui-accent); }
+.bbui-planning-choice-dots > button:focus-visible { outline: 2px solid var(--bbui-ring); outline-offset: 2px; }
+.bbui-planning-choice-other { flex: 1; min-width: 180px; }
+@media (prefers-reduced-motion: reduce) { .bbui-planning-choice-card, .bbui-planning-choice-dots > button { transition: none; } }

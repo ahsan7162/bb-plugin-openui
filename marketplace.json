@@ -1,0 +1,18 @@
+{
+  "$schema": "https://getbb.app/schemas/marketplace.schema.json",
+  "schemaVersion": 1,
+  "name": "ahsan7162",
+  "displayName": "ahsan7162's bb plugins",
+  "description": "bb plugins by ahsan7162.",
+  "plugins": [
+    {
+      "id": "openui",
+      "displayName": "OpenUI Live Replies",
+      "description": "Lets agents answer with OpenUI Lang blocks rendered inline in chat by OpenUI's React renderer.",
+      "icon": "AppWindow",
+      "tags": ["openui", "generative-ui", "chat", "interface"],
+      "author": { "name": "Muhammad Ahsan", "github": "ahsan7162" },
+      "source": { "git": { "url": "https://github.com/ahsan7162/bb-plugin-openui.git", "ref": "main" } }
+    }
+  ]
+}

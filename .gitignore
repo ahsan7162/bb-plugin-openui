@@ -1,0 +1,5 @@
+dist/
+node_modules/
+launch-film/
+launch-jump/
+.DS_Store

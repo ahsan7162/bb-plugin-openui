@@ -1,0 +1,254 @@
+/* Hallmark · shape: app screen · scope: structure group · genre: modern-minimal · theme: BB (by request: BB's own tokens) · states: 8 · v2.0.0 */
+/* Structure and media: Tree, Json, Diff, Compare, Hotspots, Sources, Entity. Tokens from kit.css only (DESIGN.md). */
+/* Tree and Json rows are 28px, not 32px: they are full-width list rows, so the row itself is the wide hit area and a 20-file tree stays scannable. */
+/* Hotspot pins (24px) and the wipe knob (12 by 32px) are smaller than 32px controls so they cover less of the image; both get a 44px hit area. */
+
+/* ---- disclosure rows (Tree, Json) */
+.bbui-structure-branch { list-style: none; margin: 0; padding: 0; min-width: 0; }
+.bbui-structure-branch .bbui-structure-branch {
+  margin-left: var(--bbui-s3);
+  padding-left: var(--bbui-s1);
+  border-left: 1px solid var(--bbui-rule);
+}
+.bbui-structure-row {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  gap: var(--bbui-s2);
+  width: 100%;
+  min-height: 28px;
+  min-width: 0;
+  padding: var(--bbui-s1) var(--bbui-s2);
+  border: 0;
+  border-radius: var(--bbui-r-control);
+  background: transparent;
+  color: var(--bbui-ink);
+  font: var(--bbui-text);
+  text-align: left;
+  outline: 2px solid transparent;
+  outline-offset: -2px;
+}
+button.bbui-structure-row {
+  cursor: pointer;
+  transition: background-color var(--bbui-micro) var(--bbui-ease-out), transform var(--bbui-micro) var(--bbui-ease-out);
+}
+button.bbui-structure-row:focus-visible { outline-color: var(--bbui-ring); transition: none; }
+@media (hover: hover) {
+  button.bbui-structure-row:hover { background: var(--bbui-well); }
+}
+button.bbui-structure-row:active { transform: translateY(1px); }
+.bbui-structure-row[aria-current="true"] { background: var(--bbui-accent-soft); }
+.bbui-structure-chev {
+  flex: none;
+  color: var(--bbui-muted);
+  transition: transform var(--bbui-short) var(--bbui-ease-out);
+}
+.bbui-structure-row[aria-expanded="true"] > .bbui-structure-chev { transform: rotate(90deg); }
+.bbui-structure-gap { flex: none; width: 14px; }
+.bbui-structure-name, .bbui-structure-key, .bbui-structure-v { min-width: 0; overflow-wrap: anywhere; }
+.bbui-structure-note { margin-left: auto; padding-left: var(--bbui-s2); }
+
+/* ---- Json */
+.bbui-structure-key { color: var(--bbui-muted); flex: none; max-width: 45%; }
+.bbui-structure-v { font-family: var(--bbui-mono); font-size: 12px; }
+.bbui-structure-v-string { color: var(--bbui-ink); }
+.bbui-structure-v-number, .bbui-structure-v-boolean { color: var(--bbui-accent); }
+.bbui-structure-v-null { color: var(--bbui-muted); }
+.bbui-structure-more { padding: var(--bbui-s1) var(--bbui-s2) var(--bbui-s1) var(--bbui-s6); }
+.bbui-structure-bar, .bbui-structure-hint {
+  margin: var(--bbui-s2) 0 0;
+  padding-top: var(--bbui-s2);
+  border-top: 1px solid var(--bbui-rule);
+}
+.bbui-structure-bar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--bbui-s2); }
+.bbui-structure-path { flex: 1 1 200px; min-width: 0; overflow-wrap: anywhere; color: var(--bbui-ink); }
+
+/* ---- Diff */
+.bbui-structure-diff { margin: 0; display: grid; gap: var(--bbui-s2); }
+.bbui-structure-diffhead { display: flex; align-items: baseline; justify-content: space-between; gap: var(--bbui-s3); min-width: 0; }
+.bbui-structure-added { color: var(--bbui-success-text); }
+.bbui-structure-removed { color: var(--bbui-danger-text); }
+
+/* ---- shared media */
+.bbui-structure-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--bbui-r-well);
+  background: var(--bbui-well);
+}
+.bbui-structure-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bbui-s1);
+  min-width: 0;
+  color: var(--bbui-ink);
+  overflow-wrap: anywhere;
+  text-decoration-line: underline;
+  text-decoration-color: var(--bbui-rule);
+  text-underline-offset: 3px;
+  border-radius: var(--bbui-r-control);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transition: text-decoration-color var(--bbui-micro) var(--bbui-ease-out);
+}
+.bbui-structure-link:focus-visible { outline-color: var(--bbui-ring); transition: none; }
+@media (hover: hover) {
+  .bbui-structure-link:hover { text-decoration-color: var(--bbui-ink); }
+}
+.bbui-structure-out { flex: none; color: var(--bbui-muted); }
+.bbui-structure-md { font: var(--bbui-text); color: var(--bbui-ink); min-width: 0; }
+.bbui-structure-md > :first-child { margin-top: 0; }
+.bbui-structure-md > :last-child { margin-bottom: 0; }
+
+/* ---- Compare */
+.bbui-structure-compare { display: grid; gap: var(--bbui-s3); }
+.bbui-structure-tools { display: flex; flex-wrap: wrap; gap: var(--bbui-s2) var(--bbui-s4); }
+.bbui-structure-seg { display: flex; flex-wrap: wrap; gap: var(--bbui-s1); }
+.bbui-structure-seg > .bbui-btn[aria-pressed="true"] { background: var(--bbui-accent-soft); border-color: var(--bbui-accent); }
+.bbui-structure-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: var(--bbui-s3); }
+.bbui-structure-grid > * { min-width: 0; }
+.bbui-structure-shot { margin: 0; display: grid; gap: var(--bbui-s1); }
+.bbui-structure-stage {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  border-radius: var(--bbui-r-well);
+  overflow: hidden;
+  user-select: none;
+  touch-action: pan-y;
+  cursor: ew-resize;
+}
+.bbui-structure-stage > img { grid-area: 1 / 1; }
+.bbui-structure-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--bbui-surface);
+  transform: translateX(-50%);
+  outline: none;
+}
+.bbui-structure-handle::before { content: ""; position: absolute; inset: 0 -21px; } /* 44px hit area */
+.bbui-structure-handle::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 32px;
+  border: 1px solid var(--bbui-rule);
+  border-radius: var(--bbui-r-control);
+  background: var(--bbui-surface);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transform: translate(-50%, -50%);
+}
+.bbui-structure-handle:focus-visible::after { outline-color: var(--bbui-ring); }
+.bbui-structure-stage[data-dragging] .bbui-structure-handle::after { border-color: var(--bbui-accent); }
+.bbui-structure-flip {
+  appearance: none;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+.bbui-structure-flip:focus-visible { outline-color: var(--bbui-ring); }
+.bbui-structure-flip:disabled { opacity: 0.55; cursor: not-allowed; }
+.bbui-structure-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--bbui-s2);
+  margin: 0;
+}
+.bbui-structure-strong { font: var(--bbui-head); }
+
+/* ---- Hotspots */
+.bbui-structure-hotspots { margin: 0; display: grid; gap: var(--bbui-s3); }
+.bbui-structure-canvas { position: relative; min-width: 0; }
+.bbui-structure-pin {
+  appearance: none;
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid var(--bbui-rule);
+  border-radius: var(--bbui-r-control);
+  background: var(--bbui-surface);
+  color: var(--bbui-ink);
+  font: var(--bbui-head);
+  font-size: 12px;
+  cursor: pointer;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  transform: translate(-50%, -50%);
+  transition: background-color var(--bbui-micro) var(--bbui-ease-out), transform var(--bbui-micro) var(--bbui-ease-out);
+}
+.bbui-structure-pin::before { content: ""; position: absolute; inset: -10px; } /* 44px hit area */
+.bbui-structure-pin:focus-visible { outline-color: var(--bbui-ring); transition: none; }
+@media (hover: hover) {
+  .bbui-structure-pin:hover { background: var(--bbui-well); }
+}
+.bbui-structure-pin:active { transform: translate(-50%, calc(-50% + 1px)); }
+.bbui-structure-pin[aria-pressed="true"] { background: var(--bbui-accent); border-color: var(--bbui-accent); color: var(--bbui-surface); }
+.bbui-structure-pin:disabled { opacity: 0.55; cursor: not-allowed; }
+.bbui-structure-detail { display: grid; gap: var(--bbui-s1); min-width: 0; }
+.bbui-structure-num {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  margin-right: var(--bbui-s1);
+  border-radius: var(--bbui-r-control);
+  background: var(--bbui-accent-soft);
+  font: var(--bbui-small);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Sources */
+.bbui-structure-sources { list-style: none; margin: 0; padding: 0; display: grid; }
+.bbui-structure-source {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  gap: var(--bbui-s2);
+  padding: var(--bbui-s2) 0;
+}
+.bbui-structure-source + .bbui-structure-source { border-top: 1px solid var(--bbui-rule); }
+.bbui-structure-index { text-align: right; font-variant-numeric: tabular-nums; }
+.bbui-structure-sourcebody { display: grid; gap: var(--bbui-s1); min-width: 0; overflow-wrap: anywhere; }
+.bbui-structure-sourcebody > .bbui-structure-link { justify-self: start; }
+.bbui-structure-sourcebody > .bbui-label:empty { display: none; }
+.bbui-structure-bad { color: var(--bbui-muted); }
+
+/* ---- Entity: a well, never a card in the block's card */
+.bbui-structure-entity { display: flex; align-items: flex-start; gap: var(--bbui-s3); min-width: 0; }
+.bbui-structure-thumb { flex: 0 0 96px; min-width: 0; }
+.bbui-structure-thumb .bbui-structure-img { aspect-ratio: 1; object-fit: cover; border-radius: var(--bbui-r-control); }
+.bbui-structure-entitybody { flex: 1 1 0; display: grid; gap: var(--bbui-s2); min-width: 0; }
+.bbui-structure-entityhead { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--bbui-s1) var(--bbui-s2); }
+.bbui-structure-title { margin: 0; overflow-wrap: anywhere; }
+.bbui-structure-kind { display: inline-flex; align-items: center; gap: var(--bbui-s1); }
+.bbui-structure-facts {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 140px), 1fr));
+  gap: var(--bbui-s2) var(--bbui-s3);
+}
+.bbui-structure-fact { min-width: 0; }
+.bbui-structure-fact > dd { margin: 0; overflow-wrap: anywhere; }
+.bbui-structure-entitylink { justify-self: start; }
+@media (max-width: 360px) {
+  .bbui-structure-entity { flex-direction: column; }
+  .bbui-structure-thumb { flex-basis: auto; width: 96px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bbui-structure-chev, button.bbui-structure-row, .bbui-structure-pin, .bbui-structure-link { transition: none; }
+}
