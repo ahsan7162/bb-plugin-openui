@@ -8,7 +8,7 @@
     {
       "id": "openui",
       "displayName": "OpenUI Live Replies",
-      "description": "Lets agents answer with OpenUI Lang blocks rendered inline in chat by OpenUI's React renderer.",
+      "description": "Turns agent replies into dashboards, reports, plans and forms you can read at a glance and click, right in the chat.",
       "icon": "AppWindow",
       "tags": ["openui", "generative-ui", "chat", "interface"],
       "author": { "name": "Muhammad Ahsan", "github": "ahsan7162" },
