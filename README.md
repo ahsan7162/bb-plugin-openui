@@ -4,10 +4,11 @@ A [bb](https://getbb.app) plugin that lets agents answer with live UI: [OpenUI L
 
 See [PLUGIN_OVERVIEW.md](PLUGIN_OVERVIEW.md) for what it does, its requirements, and its costs.
 
-<!-- VIDEO: open this file in GitHub's web editor and drag your .mp4 onto the line below.
-     GitHub uploads it and replaces it with a https://github.com/user-attachments/assets/... link,
-     which renders as an inline player. Delete this comment afterwards. -->
-<!-- video goes here -->
+
+
+https://github.com/user-attachments/assets/7782c2af-29fb-43af-956a-e492a8bacd75
+
+
 
 ## Screenshots
 
