@@ -14,35 +14,35 @@ https://github.com/user-attachments/assets/7782c2af-29fb-43af-956a-e492a8bacd75
 
 Everything below is the plugin's own rendering, on bb's dark theme.
 
-<!-- IMAGE: drag 01-hero.png onto this line in GitHub's web editor, then delete this comment -->
+<img width="3200" height="2000" alt="01-hero" src="https://github.com/user-attachments/assets/6c91d47d-7570-47a8-9fb0-5b64aba7030d" />
 
 **Dashboards**: gauges and charts from numbers the agent already has.
 
-<!-- IMAGE: drag 02-dashboard.png onto this line in GitHub's web editor, then delete this comment -->
+<img width="3200" height="2000" alt="02-dashboard" src="https://github.com/user-attachments/assets/0d05efc5-5b22-4ae0-a570-d2bb0f7b9aa0" />
 
 **Reports**: test runs with failures first, file and line.
 
-<!-- IMAGE: drag 03-reports.png onto this line in GitHub's web editor, then delete this comment -->
+<img width="3200" height="2000" alt="03-reports" src="https://github.com/user-attachments/assets/bfcf14f8-3d74-47b4-9826-2caa9f0bbf2a" />
 
 **Diagrams**: flows drawn from Mermaid.
 
-<!-- IMAGE: drag 04-diagram.png onto this line in GitHub's web editor, then delete this comment -->
+<img width="3200" height="2000" alt="04-diagram" src="https://github.com/user-attachments/assets/ef8cdc80-4085-4f57-a3bb-023eb78e925e" />
 
 **Decisions you can click**: re-weight criteria live, then send the pick back to the agent.
 
-<!-- IMAGE: drag 05-decision.png onto this line in GitHub's web editor, then delete this comment -->
+<img width="3200" height="2000" alt="05-decision" src="https://github.com/user-attachments/assets/7c08b128-d8b8-4bb5-9185-41f748531a09" />
 
 **Planning**: roadmaps with a today line and kanban boards.
 
-<!-- IMAGE: drag 06-planning.png onto this line in GitHub's web editor, then delete this comment -->
+<img width="3200" height="2000" alt="06-planning" src="https://github.com/user-attachments/assets/8f15681c-993a-4611-b2c3-5819f4db4f2b" />
 
 **Learning**: quizzes and flashcards, with the score sent back when you're done.
 
-<!-- IMAGE: drag 07-learning.png onto this line in GitHub's web editor, then delete this comment -->
+<img width="3200" height="2000" alt="07-learning" src="https://github.com/user-attachments/assets/130ca042-2b2e-4c30-a4aa-9082a967651e" />
 
 **Code and logs**: diffs and build output with errors counted.
 
-<!-- IMAGE: drag 08-code.png onto this line in GitHub's web editor, then delete this comment -->
+<img width="3200" height="2000" alt="08-code" src="https://github.com/user-attachments/assets/07ea66fb-2550-4de6-b5a6-7d01a954790b" />
 
 ## Components
 
