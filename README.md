@@ -12,26 +12,37 @@ https://github.com/user-attachments/assets/7782c2af-29fb-43af-956a-e492a8bacd75
 
 ## Screenshots
 
-Everything below is a real reply in bb, rendered by this plugin.
+Everything below is the plugin's own rendering, on bb's dark theme.
+
+<!-- IMAGE: drag 01-hero.png onto this line in GitHub's web editor, then delete this comment -->
 
 **Dashboards**: gauges and charts from numbers the agent already has.
 
-![Service health dashboard with gauges and a latency chart](docs/screenshots/dashboard.png)
+<!-- IMAGE: drag 02-dashboard.png onto this line in GitHub's web editor, then delete this comment -->
 
 **Reports**: test runs with failures first, file and line.
 
-![Test results report](docs/screenshots/tests.png)
+<!-- IMAGE: drag 03-reports.png onto this line in GitHub's web editor, then delete this comment -->
 
 **Diagrams**: flows drawn from Mermaid.
 
-![Flow diagram of how a reply becomes UI](docs/screenshots/diagram.png)
+<!-- IMAGE: drag 04-diagram.png onto this line in GitHub's web editor, then delete this comment -->
 
 **Decisions you can click**: re-weight criteria live, then send the pick back to the agent.
 
-![Weighted decision between three job queues](docs/screenshots/decision.png)
+<!-- IMAGE: drag 05-decision.png onto this line in GitHub's web editor, then delete this comment -->
 
-<!-- More screenshots: save a PNG under docs/screenshots/ and add a line like
-![What it shows](docs/screenshots/your-image.png) -->
+**Planning**: roadmaps with a today line and kanban boards.
+
+<!-- IMAGE: drag 06-planning.png onto this line in GitHub's web editor, then delete this comment -->
+
+**Learning**: quizzes and flashcards, with the score sent back when you're done.
+
+<!-- IMAGE: drag 07-learning.png onto this line in GitHub's web editor, then delete this comment -->
+
+**Code and logs**: diffs and build output with errors counted.
+
+<!-- IMAGE: drag 08-code.png onto this line in GitHub's web editor, then delete this comment -->
 
 ## Components
 
